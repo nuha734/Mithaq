@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ميثاق | MITHAQ</title>
+<style>
+:root{
+  --navy:#0b1f33; --navy2:#12324d; --teal:#18a999; --bg:#f5f7fa;
+  --text:#162536; --muted:#718096; --line:#e4e9ef; --white:#fff;
+  --red:#d94b5b; --yellow:#d69e2e; --green:#269b68;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input{font:inherit} button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:var(--navy);color:#fff;padding:24px 16px;position:fixed;right:0;top:0;bottom:0}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 10px 30px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--teal);display:grid;place-items:center;font-weight:900;font-size:20px}
+.brand b{font-size:20px}.brand small{display:block;color:#aebdca;font-size:10px;margin-top:2px}
+.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;color:#cbd6df;text-align:right;padding:13px 14px;border-radius:10px}
+.nav button:hover,.nav button.active{background:#173852;color:#fff}.nav .ico{display:inline-block;width:27px}
+.main{margin-right:245px;width:calc(100% - 245px);padding:28px 34px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.top h1{margin:0;font-size:25px}.top p{margin:7px 0 0;color:var(--muted);font-size:13px}
+.user{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:12px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#d9eee9;display:grid;place-items:center;color:#137b70;font-weight:bold}
+.page{display:none}.page.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:0 2px 8px #102a4308}
+.card .label{color:var(--muted);font-size:13px}.num{font-size:28px;font-weight:800;margin-top:10px}.hint{font-size:11px;color:var(--muted);margin-top:7px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-left:6px}.red{background:#e65b68}.yellow{background:#e3ae36}.green{background:#3aa975}
+.grid2{display:grid;grid-template-columns:1.4fr .9fr;gap:18px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;margin-bottom:18px}
+.panel h2{font-size:16px;margin:0 0 16px}.panelhead{display:flex;justify-content:space-between;align-items:center}
+.btn{border:0;border-radius:9px;padding:10px 15px;background:var(--teal);color:#fff;font-weight:bold}.btn.secondary{background:#edf4f3;color:#147c72}.btn.dark{background:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:13px 8px;border-bottom:1px solid #edf0f3;text-align:right}th{color:var(--muted);font-weight:500}
+.badge{padding:5px 9px;border-radius:20px;font-size:10px}.b-red{background:#fdebed;color:#b52d3e}.b-yellow{background:#fff6df;color:#9b6a00}.b-green{background:#e7f7ef;color:#19784e}
+.feed{display:grid;gap:14px}.feeditem{display:flex;gap:11px;align-items:flex-start}.feedicon{width:34px;height:34px;border-radius:9px;background:#edf5f4;display:grid;place-items:center}.feeditem b{font-size:12px}.feeditem p{margin:4px 0;color:var(--muted);font-size:11px}
+.radar{display:grid;gap:13px}.change{border:1px solid var(--line);border-radius:12px;padding:15px;display:flex;justify-content:space-between;align-items:center}.change h3{margin:0 0 6px;font-size:13px}.clickable{cursor:pointer;transition:.15s}.clickable:hover{border-color:var(--teal);transform:translateY(-1px)}.clickable.selected{border-color:var(--teal);box-shadow:0 0 0 2px #18a99922}.change p{margin:0;color:var(--muted);font-size:11px}
+.upload{border:2px dashed #cbd7df;border-radius:14px;padding:42px;text-align:center;background:#fbfcfd}.upload .big{font-size:34px}.upload h3{margin:10px 0 6px}.upload p{color:var(--muted);font-size:12px}
+.result{display:none;margin-top:18px}.progress{height:8px;background:#edf1f4;border-radius:9px;overflow:hidden}.progress i{display:block;height:100%;width:78%;background:var(--teal)}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.mini{padding:15px;border:1px solid var(--line);border-radius:12px}.mini b{font-size:20px}.mini span{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.task{display:grid;grid-template-columns:1fr 110px 90px 90px;gap:10px;align-items:center;padding:15px;border-bottom:1px solid var(--line);font-size:12px}.task:last-child{border:0}
+.empty{padding:45px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:25px;bottom:25px;background:var(--navy);color:#fff;padding:13px 17px;border-radius:10px;display:none;font-size:12px}
+@media(max-width:900px){.sidebar{width:76px}.brand div:not(.logo),.nav button span:last-child{display:none}.main{margin-right:76px;width:calc(100% - 76px);padding:20px}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:600px){.cards{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px}.user{display:none}.task{grid-template-columns:1fr}.main{padding:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">م</div><div><b>ميثاق</b><small>MITHAQ • COMPLIANCE</small></div></div>
+  <nav class="nav">
+    <button class="active" data-page="home"><span class="ico">⌂</span><span>الرئيسية</span></button>
+    <button data-page="radar"><span class="ico">⌁</span><span>رادار التغيّرات</span></button>
+    <button data-page="audit"><span class="ico">▣</span><span>التدقيق الذكي</span></button>
+    <button data-page="impact"><span class="ico">◈</span><span>خريطة الأثر</span></button>
+    <button data-page="tasks"><span class="ico">✓</span><span>مركز المعالجة</span></button>
+    <button data-page="reports"><span class="ico">▤</span><span>التقارير</span></button>
+  </nav>
+</aside>
+
+<main class="main">
+<header class="top">
+  <div><h1 id="title">لوحة التحكم</h1><p id="subtitle">نظرة سريعة على حالة الامتثال في منشأتك</p></div>
+  <div class="user"><div class="avatar">م</div><div><b style="font-size:12px">منشأتي</b><div style="font-size:10px;color:#718096">مسؤول الامتثال</div></div></div>
+</header>
+
+<section id="home" class="page active">
+  <div class="cards">
+    <div class="card"><span class="label">تغيّرات جديدة</span><div class="num">12</div><div class="hint"><span class="dot red"></span>3 تحتاج مراجعة</div></div>
+    <div class="card"><span class="label">فجوات محتملة</span><div class="num">4</div><div class="hint"><span class="dot yellow"></span>تحتاج تحققًا</div></div>
+    <div class="card"><span class="label">مهام مفتوحة</span><div class="num">8</div><div class="hint">من أصل 24 مهمة</div></div>
+    <div class="card"><span class="label">سياسات مفحوصة</span><div class="num">7</div><div class="hint"><span class="dot green"></span>آخر فحص اليوم</div></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="panelhead"><h2>تغيّرات تحتاج انتباه</h2><button class="btn secondary" onclick="go('radar')">عرض الرادار</button></div>
+      <table><thead><tr><th>التغيير</th><th>المجال</th><th>الأثر</th><th>الحالة</th></tr></thead>
+      <tbody>
+        <tr><td>تعديل متطلب تنظيمي</td><td>حماية البيانات</td><td><span class="badge b-red">مرتفع</span></td><td><span class="badge b-yellow">مراجعة</span></td></tr>
+        <tr><td>تحديث لائحة</td><td>الحوكمة</td><td><span class="badge b-yellow">متوسط</span></td><td><span class="badge b-yellow">تحليل</span></td></tr>
+        <tr><td>إضافة متطلب</td><td>الأمن السيبراني</td><td><span class="badge b-yellow">متوسط</span></td><td><span class="badge b-green">مراجع</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="panel"><h2>آخر النشاطات</h2><div class="feed">
+      <div class="feeditem"><div class="feedicon">✓</div><div><b>تم إكمال مهمة</b><p>مراجعة سياسة الخصوصية • منذ ساعتين</p></div></div>
+      <div class="feeditem"><div class="feedicon">!</div><div><b>تغيير جديد</b><p>تمت إضافة تحديث تنظيمي للرادار</p></div></div>
+      <div class="feeditem"><div class="feedicon">▣</div><div><b>تم فحص مستند</b><p>سياسة حماية البيانات • اليوم</p></div></div>
+    </div></div>
+  </div>
+</section>
+
+<section id="radar" class="page">
+ <div class="panel"><div class="panelhead"><div><h2>رادار التغيّرات النظامية</h2><p style="color:#718096;font-size:11px">التغيّرات التي تستحق المراجعة ضمن نطاق المنشأة</p></div><button class="btn" onclick="toast('تم تحديث الرادار')">تحديث الرادار</button></div>
+ <div class="radar" style="margin-top:15px">
+  <div class="change clickable" tabindex="0" onclick="selectChange(this,'تعديل متطلب تنظيمي لحماية البيانات')" onkeydown="if(event.key==='Enter')selectChange(this,'تعديل متطلب تنظيمي لحماية البيانات')"><div><h3>تعديل متطلب تنظيمي لحماية البيانات</h3><p>تم رصد تغيير يحتاج إلى تحليل أثر على سياسات المنشأة.</p></div><span class="badge b-red">يحتاج مراجعة</span></div>
+  <div class="change clickable" tabindex="0" onclick="selectChange(this,'تحديث لائحة حوكمة')" onkeydown="if(event.key==='Enter')selectChange(this,'تحديث لائحة حوكمة')"><div><h3>تحديث لائحة حوكمة</h3><p>قد يؤثر على سياسة الصلاحيات والإجراءات الداخلية.</p></div><span class="badge b-yellow">تحليل الأثر</span></div>
+  <div class="change clickable" tabindex="0" onclick="selectChange(this,'إضافة متطلب إجرائي')" onkeydown="if(event.key==='Enter')selectChange(this,'إضافة متطلب إجرائي')"><div><h3>إضافة متطلب إجرائي</h3><p>لا يظهر أثر واضح على المستندات الحالية.</p></div><span class="badge b-green">تمت المراجعة</span></div>
+ </div></div>
+ <div class="panel"><h2>تفاصيل التغيير المحدد</h2><div class="stats3"><div class="mini"><b>المصدر</b><span>مرجع رسمي موثق</span></div><div class="mini"><b>نوع التغيير</b><span>تعديل متطلب</span></div><div class="mini"><b>الأثر</b><span>مرتفع مبدئيًا</span></div></div><p style="font-size:12px;line-height:2;color:#536273;margin-bottom:0">يعرض ميثاق الفرق بين النصوص ومؤشرات الأثر المحتمل. النتيجة المولدة بالذكاء الاصطناعي للمراجعة البشرية وليست حكمًا قانونيًا نهائيًا.</p></div>
+</section>
+
+<section id="audit" class="page">
+ <div class="panel"><h2>التدقيق الذكي للسياسات</h2><div class="upload"><div class="big">⇧</div><h3>ارفع سياسة أو إجراء</h3><p>PDF أو DOCX — النموذج الأولي يحاكي عملية التحليل</p><button class="btn" type="button" id="chooseFile">اختيار ملف</button><input id="file" type="file" accept=".pdf,.doc,.docx" hidden></div>
+ <div class="result" id="result"><h3 style="font-size:14px">نتيجة التحليل التجريبية</h3><p style="font-size:11px;color:#718096">تم تحليل بنود المستند ومقارنتها بالمتطلبات المحددة للنموذج.</p><div class="progress"><i></i></div><div class="stats3"><div class="mini"><b style="color:#269b68">12</b><span>متوافق مبدئيًا</span></div><div class="mini"><b style="color:#d69e2e">4</b><span>تحتاج مراجعة</span></div><div class="mini"><b style="color:#d94b5b">2</b><span>فجوات محتملة</span></div></div></div>
+ </div>
+</section>
+
+<section id="impact" class="page">
+ <div class="panel"><h2>خريطة أثر التغيير</h2><p style="color:#718096;font-size:12px">تصور يربط التغيير النظامي بالسياسات والإجراءات المحتمل تأثرها.</p>
+ <div style="display:grid;gap:10px;margin-top:25px">
+  <div class="mini" style="text-align:center;background:#f8fbfb"><b>تغيير نظامي</b><span>تعديل متطلب تنظيمي</span></div>
+  <div style="text-align:center;font-size:22px;color:#18a999">↓</div>
+  <div class="mini"><b>سياسة الخصوصية</b><span>تحتاج مراجعة لبند محدد</span></div>
+  <div class="mini"><b>إجراء الاحتفاظ بالبيانات</b><span>أثر محتمل — يحتاج تحققًا</span></div>
+  <div class="mini"><b>سياسة الوصول</b><span>لا يظهر أثر واضح</span></div>
+ </div></div>
+</section>
+
+<section id="tasks" class="page">
+ <div class="panel"><div class="panelhead"><h2>مركز المعالجة</h2><button class="btn" onclick="toast('تم إنشاء مهمة تجريبية')">+ مهمة جديدة</button></div>
+ <div class="task"><b>مراجعة بند سياسة الخصوصية</b><span>مسؤول الامتثال</span><span class="badge b-red">عالية</span><span class="badge b-yellow">قيد التنفيذ</span></div>
+ <div class="task"><b>تحديث إجراء الاحتفاظ</b><span>مسؤول البيانات</span><span class="badge b-yellow">متوسطة</span><span class="badge b-yellow">لم تبدأ</span></div>
+ <div class="task"><b>مراجعة سياسة الوصول</b><span>IT</span><span class="badge b-yellow">متوسطة</span><span class="badge b-green">مكتملة</span></div>
+ </div>
+</section>
+
+<section id="reports" class="page">
+ <div class="panel"><div class="panelhead"><div><h2>تقارير الامتثال</h2><p style="color:#718096;font-size:11px">ملخص نتائج الفحص والمعالجة</p></div><button class="btn" onclick="toast('تم تجهيز التقرير التجريبي')">إنشاء تقرير</button></div>
+ <div class="cards" style="margin-top:18px"><div class="card"><span class="label">السياسات المفحوصة</span><div class="num">7</div></div><div class="card"><span class="label">الفجوات المحتملة</span><div class="num">4</div></div><div class="card"><span class="label">المهام المكتملة</span><div class="num">16</div></div><div class="card"><span class="label">آخر فحص</span><div class="num" style="font-size:20px">اليوم</div></div></div>
+ <div class="panel" style="margin:0;background:#fafcfd"><b>تنبيه:</b><span style="font-size:11px;color:#718096"> نتائج النموذج الأولي توضيحية. في المنتج الحقيقي يجب ربط كل نتيجة بمصدر رسمي والتحقق البشري.</span></div>
+ </div>
+</section>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const titles={home:['لوحة التحكم','نظرة سريعة على حالة الامتثال في منشأتك'],radar:['رادار التغيّرات','رصد التغيّرات النظامية وتحليلها'],audit:['التدقيق الذكي','فحص السياسات وتحديد الفجوات المحتملة'],impact:['خريطة الأثر','ربط التغيّرات بالسياسات والإجراءات المتأثرة'],tasks:['مركز المعالجة','متابعة إجراءات التصحيح والمهام'],reports:['التقارير','تقارير ومؤشرات الامتثال']};
+function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));document.getElementById('title').textContent=titles[id][0];document.getElementById('subtitle').textContent=titles[id][1];window.scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+document.getElementById('chooseFile').onclick=function(e){e.stopPropagation();document.getElementById('file').click()};
+document.getElementById('file').onchange=function(){if(this.files.length){document.querySelector('.upload h3').textContent='تم اختيار: '+this.files[0].name;document.getElementById('result').style.display='block';toast('تم استلام الملف — جاري التحليل التجريبي')}};
+function selectChange(el,name){document.querySelectorAll('.change').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');toast('تم تحديد: '+name)};
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',2500)}
+</script>
+</body>
+</html>
